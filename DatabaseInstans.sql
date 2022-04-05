@@ -1,18 +1,11 @@
-# Hvis tabellerne eksisterer, bliver de slettet.
+# Hvis databasen eksisterer, bliver den slettet.
 DROP DATABASE IF EXISTS Tidsmaskinen;
 
+# Opret database og brug den
 CREATE DATABASE Tidsmaskinen;
 USE Tidsmaskinen;
- 
--- DROP TABLE IF EXISTS Deltager;
--- DROP TABLE IF EXISTS Begivenhed;
--- DROP TABLE IF EXISTS Aldersklasse;
--- DROP TABLE IF EXISTS Person;
--- DROP TABLE IF EXISTS Idrætsforening;
-
 
 # Tabeller opsættes her.
-
 CREATE TABLE Idrætsforening
     (ID              	VARCHAR(10) NOT NULL,
      Navn            	VARCHAR(35) NOT NULL,
@@ -88,3 +81,10 @@ INSERT INTO Aldersklasse(Minimumsgrænse, Maksimumsgrænse) VALUES
 ('80','89'),
 ('90','99'),
 ('100','199');
+
+# Vis tabellerne
+SELECT * FROM Idrætsforening;
+SELECT * FROM Person;
+SELECT * FROM Begivenhed;
+SELECT * FROM Deltager;
+SELECT * FROM Aldersklasse;
