@@ -9,7 +9,8 @@ USE Tidsmaskinen;
 CREATE TABLE Idrætsforening
     (ID              	VARCHAR(10) NOT NULL,
      Navn            	VARCHAR(35) NOT NULL,
-     Vej             	VARCHAR(35),
+     Adresse           	VARCHAR(35),
+     PostNr				DECIMAL(4,0),
      Email           	VARCHAR(35),
      TelefonNr       	DECIMAL(8,0),
      PRIMARY KEY(ID)
@@ -19,7 +20,8 @@ CREATE TABLE Person
     (Email           	VARCHAR(35) NOT NULL,
      Fornavn         	VARCHAR(35) NOT NULL,
      Efternavn       	VARCHAR(35) NOT NULL,
-     Vej             	VARCHAR(35),
+     Adresse           	VARCHAR(35),
+     PostNr				DECIMAL(4,0),
      Fødselsdato     	DATE NOT NULL,
      Køn             	ENUM('M','K') NOT NULL,
      PRIMARY KEY(Email)
@@ -53,13 +55,13 @@ CREATE TABLE Aldersklasse
     );
     
 # Indsættelse af data i tabellerne
-INSERT INTO Idrætsforening(ID, navn, Vej, Email, TelefonNr) VALUES
-('oa', 'Over Achievers', 'Lærkevej', 'OverAchievers@gmail.com', '18131813'),
-('ua', 'Under Achievers', 'Odinsvej', 'UnderAchievers@gmail.com', '31813181');
+INSERT INTO Idrætsforening(ID, Navn, Adresse, PostNr, Email, TelefonNr) VALUES
+('oa', 'Over Achievers', 'Lærkevej', '1500', 'OverAchievers@gmail.com', '18131813'),
+('ua', 'Under Achievers', 'Odinsvej', '1360', 'UnderAchievers@gmail.com', '31813181');
 
-INSERT INTO Person(Email, Fornavn, Efternavn, Vej, Fødselsdato, Køn) VALUES
-('knaldperlen@gmail.com', 'Brian', 'Briansen', 'Briansvej', '19900202', 'M'),
-('DanseMyggen@gmail.com', 'Karen', 'Briansen', 'Briansvej', '19900201', 'K');
+INSERT INTO Person(Email, Fornavn, Efternavn, Adresse, PostNr, Fødselsdato, Køn) VALUES
+('knaldperlen@gmail.com', 'Brian', 'Briansen', 'Briansvej', '1500', '19900202', 'M'),
+('DanseMyggen@gmail.com', 'Karen', 'Briansen', 'Briansvej', '1500', '19900201', 'K');
 
 INSERT INTO Begivenhed(ID, Dato, EventType) VALUES
 ('oa', '20220330', 'MTB'),
