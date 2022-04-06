@@ -154,10 +154,12 @@ SELECT Fornavn, Efternavn, Køn FROM Person
 WHERE Køn = 'M';
 
 CREATE VIEW KvindeEventResultat AS
-SELECT Fornavn, Efternavn, Aldersklasse.EventTypeID, Resultat
-FROM Aldersklasse, Deltager NATURAL JOIN Person
-WHERE FraAlder = 20 AND TilAlder = 29 AND Person.Køn = 'K' AND Aldersklasse.EventTypeID = 'MTB'
+SELECT p.Fornavn, p.Efternavn, b.EventTypeID, d.Resultat
+FROM person p NATURAL JOIN deltager d NATURAL JOIN begivenhed b NATURAL JOIN aldersklasse a
+WHERE a.FraAlder = 20 AND a.TilAlder = 29 AND p.Køn='k' AND b.ForeningsID="A" AND  b.Dato= "2022-02-02" AND b.EventTypeID= "10km"
 ORDER BY Resultat;
+
+SELECT * FROM tidsmaskinen.kvindeeventresultat;
 
 # Vis view
 SELECT * FROM FordelingKvinder;
