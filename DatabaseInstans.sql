@@ -79,10 +79,9 @@ INSERT INTO Person(Email, Fornavn, Efternavn, Adresse, Postnr, Fødselsdato, Kø
 
 INSERT INTO EventType(EventTypeID) VALUES
 ('MTB'),
-('10km'),
 ('5km'),
-('SV'),
-('BC');
+('10km');
+
 
 
 INSERT INTO Begivenhed(ForeningsID, Dato, EventTypeID) VALUES
@@ -90,12 +89,12 @@ INSERT INTO Begivenhed(ForeningsID, Dato, EventTypeID) VALUES
 ('ua', '20220202', '10km'),
 ('A', '20220202', '10km'),
 ('O', '20220330', 'MTB'),
-('vk', '20220328', 'BC');
+('vk', '20220328', '10km');
 
 INSERT INTO Deltager(Email, ForeningsID, Dato, EventTypeID, StartNr, Resultat) VALUES
 ('knaldperlen@gmail.com', 'oa', '20220330', 'MTB', '001', '01:52:23'),
 ('DanseMyggen@gmail.com', 'ua', '20220202', '10km', '001', '00:30:28'),
-('dansermedulve@gmail.com', 'vk', '20220328', 'BC', '002', '00:50:29'),
+('dansermedulve@gmail.com', 'vk', '20220328', '10km', '002', '00:50:29'),
 ('easteregg@gmail.com', 'O', '20220330', 'MTB', '002', '00:28:10'),
 ('elizabeth@gmail.com', 'A', '20220202', '10km', '001', '00:11:09');
 
@@ -144,6 +143,27 @@ INSERT INTO Aldersklasse(EventTypeID, Køn, FraAlder, TilAlder) VALUES
 ('10km','K','80','89'),
 ('10km','K','90','99'),
 ('10km','K','100','199');
+
+# Opret view
+CREATE VIEW FordelingKvinder AS
+SELECT Fornavn, Efternavn, Køn FROM Person
+WHERE Køn = 'K';
+
+CREATE VIEW FordelingMænd AS
+SELECT Fornavn, Efternavn, Køn FROM Person
+WHERE Køn = 'M';
+
+CREATE VIEW KvindeEventResultat AS
+SELECT Fornavn, Efternavn, Aldersklasse.EventTypeID, Resultat
+FROM Aldersklasse, Deltager NATURAL JOIN Person
+WHERE FraAlder = 20 AND TilAlder = 29 AND Person.Køn = 'K' AND Aldersklasse.EventTypeID = 'MTB'
+ORDER BY Resultat;
+
+# Vis view
+SELECT * FROM FordelingKvinder;
+SELECT * FROM FordelingMænd;
+SELECT * FROM KvindeEventResultat;
+
 
 # Vis tabellerne
 SELECT * FROM Idrætsforening;
