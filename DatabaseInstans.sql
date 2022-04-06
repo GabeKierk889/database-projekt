@@ -154,14 +154,14 @@ SELECT Fornavn, Efternavn, Køn FROM Person
 WHERE Køn = 'M';
 
 CREATE VIEW KvindeEventResultat AS
-SELECT p.Fornavn, p.Efternavn, b.EventTypeID, d.Resultat
+SELECT p.Fornavn, p.Efternavn, b.ForeningsID, b.Dato, b.EventTypeID, d.Resultat, timestampdiff(year, Fødselsdato, curdate()) AS Alder
 FROM person p NATURAL JOIN deltager d NATURAL JOIN begivenhed b NATURAL JOIN aldersklasse a
-WHERE a.FraAlder = 20 AND a.TilAlder = 29 AND p.Køn='k' AND b.ForeningsID="A" AND  b.Dato= "2022-02-02" AND b.EventTypeID= "10km"
+WHERE timestampdiff(year, Fødselsdato, curdate()) >= a.FraAlder AND timestampdiff(year, Fødselsdato, curdate()) <= a.TilAlder AND p.Køn='k' 
+AND b.ForeningsID="frihjul" AND  b.Dato= "2022-05-04" AND b.EventTypeID= "mtb" AND a.FraAlder = 30
 ORDER BY Resultat;
 
-SELECT * FROM tidsmaskinen.kvindeeventresultat;
 
-# Vis view
+# Vis views
 SELECT * FROM FordelingKvinder;
 SELECT * FROM FordelingMænd;
 SELECT * FROM KvindeEventResultat;
