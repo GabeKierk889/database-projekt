@@ -46,7 +46,7 @@ public class Database {
            statement.setString(2,person.getFornavn());
            statement.setString(3,person.getEfternavn());
            statement.setString(4,null);
-           statement.setInt(5,0);
+           statement.setString(5,null);
            statement.setDate(6,  new java.sql.Date(person.getFoedselsdato().getTime()));
            statement.setString(7,person.getKoen());
            int rowsInserted = statement.executeUpdate();
@@ -129,9 +129,9 @@ public class Database {
             statement.setString(1,Id);
             statement.setString(2,"test");
             statement.setString(3,null);
-            statement.setInt(4,0);
+            statement.setString(4,null);
             statement.setString(5,null);
-            statement.setInt(6,0);
+            statement.setString(6,null);
             int rowsInserted=statement.executeUpdate();
             System.out.println("Row inserted: " + rowsInserted);
 
