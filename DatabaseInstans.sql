@@ -65,23 +65,39 @@ CREATE TABLE Aldersklasse
 # Indsættelse af data i tabellerne
 INSERT INTO Idrætsforening(ForeningsID, Navn, Adresse, Postnr, Email, TelefonNr) VALUES
 ('oa', 'Over Achievers', 'Lærkevej', '1500', 'OverAchievers@gmail.com', '18131813'),
-('ua', 'Under Achievers', 'Odinsvej', '1360', 'UnderAchievers@gmail.com', '31813181');
+('ua', 'Under Achievers', 'Odinsvej', '1360', 'UnderAchievers@gmail.com', '31813181'),
+('vk', 'vikingerne', 'Roskildevej', '3600', 'odin@gmail.com', '44248271'),
+('A', 'Avengers', 'Stark', '9090', 'avengers@gmail.com', '24819417'),
+('O', 'Olympus', 'Midgårdsvej', '8500', 'olympen@gmail.com', '24158927');
 
 INSERT INTO Person(Email, Fornavn, Efternavn, Adresse, Postnr, Fødselsdato, Køn) VALUES
 ('knaldperlen@gmail.com', 'Brian', 'Briansen', 'Briansvej', '1500', '19900202', 'M'),
-('DanseMyggen@gmail.com', 'Karen', 'Briansen', 'Briansvej', '1500', '19900201', 'K');
+('DanseMyggen@gmail.com', 'Karen', 'Briansen', 'Briansvej', '1500', '19900201', 'K'),
+('dansermedulve@gmail.com', 'Mikkel', 'Christensen', 'Mørkevej', '1429', '19900201', 'M'),
+('easteregg@gmail.com', 'Bugs', 'Bunny', 'Solvej', '1852', '19900224', 'M'),
+('elizabeth@gmail.com', 'Elizabeth', 'Markussen', 'Gefion', '8294', '19900205', 'K');
 
 INSERT INTO EventType(EventTypeID) VALUES
 ('MTB'),
-('10km');
+('10km'),
+('5km'),
+('SV'),
+('BC');
+
 
 INSERT INTO Begivenhed(ForeningsID, Dato, EventTypeID) VALUES
 ('oa', '20220330', 'MTB'),
-('ua', '20220202', '10km');
+('ua', '20220202', '10km'),
+('A', '20220202', '10km'),
+('O', '20220330', 'MTB'),
+('vk', '20220328', 'BC');
 
 INSERT INTO Deltager(Email, ForeningsID, Dato, EventTypeID, StartNr, Resultat) VALUES
 ('knaldperlen@gmail.com', 'oa', '20220330', 'MTB', '001', '01:52:23'),
-('DanseMyggen@gmail.com', 'ua', '20220202', '10km', '001', '00:30:28');
+('DanseMyggen@gmail.com', 'ua', '20220202', '10km', '001', '00:30:28'),
+('dansermedulve@gmail.com', 'vk', '20220328', 'BC', '002', '00:50:29'),
+('easteregg@gmail.com', 'O', '20220330', 'MTB', '002', '00:28:10'),
+('elizabeth@gmail.com', 'A', '20220202', '10km', '001', '00:11:09');
 
 INSERT INTO Aldersklasse(EventTypeID, Køn, FraAlder, TilAlder) VALUES
 ('MTB','M','0','9'),
