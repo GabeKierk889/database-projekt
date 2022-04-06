@@ -7,13 +7,13 @@ USE Tidsmaskinen;
 
 # Tabeller opsættes her.
 CREATE TABLE Idrætsforening
-    (ID              	VARCHAR(10) NOT NULL,
+    (ForeningsID        VARCHAR(10) NOT NULL,
      Navn            	VARCHAR(35) NOT NULL,
      Adresse           	VARCHAR(35),
-     PostNr				DECIMAL(4,0),
+     Postnr				DECIMAL(4,0),
      Email           	VARCHAR(35),
      TelefonNr       	DECIMAL(8,0),
-     PRIMARY KEY(ID)
+     PRIMARY KEY(ForeningsID)
     );
     
 CREATE TABLE Person
@@ -21,57 +21,65 @@ CREATE TABLE Person
      Fornavn         	VARCHAR(35) NOT NULL,
      Efternavn       	VARCHAR(35) NOT NULL,
      Adresse           	VARCHAR(35),
-     PostNr				DECIMAL(4,0),
+     Postnr				DECIMAL(4,0),
      Fødselsdato     	DATE NOT NULL,
      Køn             	ENUM('M','K') NOT NULL,
      PRIMARY KEY(Email)
     );
-    
+ 
+CREATE TABLE EventType
+    (EventTypeID       	VARCHAR(15) NOT NULL,
+     PRIMARY KEY(EventTypeID)
+    ); 
+ 
 CREATE TABLE Begivenhed
-    (ID              	VARCHAR(10) NOT NULL,
+    (ForeningsID        VARCHAR(10) NOT NULL,
      Dato            	DATE NOT NULL,
-     EventType       	VARCHAR(35) NOT NULL,
-     PRIMARY KEY(ID,Dato,EventType),
-     FOREIGN KEY(ID) REFERENCES Idrætsforening(ID) ON DELETE CASCADE
+     EventTypeID       	VARCHAR(15) NOT NULL,
+     PRIMARY KEY(ForeningsID,Dato,EventTypeID),
+     FOREIGN KEY(ForeningsID) REFERENCES Idrætsforening(ForeningsID) ON DELETE CASCADE,
+	 FOREIGN KEY(EventTypeID) REFERENCES EventType(EventTypeID) ON DELETE CASCADE
     );
 
 CREATE TABLE Deltager
     (Email           	VARCHAR(35) NOT NULL,
-     ID              	VARCHAR(10) NOT NULL,
+     ForeningsID        VARCHAR(10) NOT NULL,
      Dato            	DATE NOT NULL,
-     EventType       	VARCHAR(35) NOT NULL,
+     EventTypeID       	VARCHAR(15) NOT NULL,
      StartNr         	DECIMAL(3,0) NOT NULL,
      Resultat        	TIME,
-     PRIMARY KEY(Email,ID,Dato,EventType),
+     PRIMARY KEY(Email,ForeningsID,Dato,EventTypeID),
      FOREIGN KEY(Email) REFERENCES Person(Email) ON DELETE CASCADE,
-     FOREIGN KEY(ID) REFERENCES Idrætsforening(ID) ON DELETE CASCADE,
-     FOREIGN KEY(ID, Dato, EventType) REFERENCES Begivenhed(ID, Dato, EventType) ON DELETE CASCADE
+     FOREIGN KEY(ForeningsID, Dato, EventTypeID) REFERENCES Begivenhed(ForeningsID, Dato, EventTypeID) ON DELETE CASCADE
     );
     
 CREATE TABLE Aldersklasse
-	(Minimumsgrænse		DECIMAL(3,0) NOT NULL,
-     Maksimumsgrænse	DECIMAL(3,0) NOT NULL,
-     PRIMARY KEY(Minimumsgrænse)
+	(EventTypeID		VARCHAR(15) NOT NULL,
+     Køn				ENUM('M','K') NOT NULL,
+     FraAlder			DECIMAL(3,0) NOT NULL,
+     TilAlder			DECIMAL(3,0) NOT NULL,
+     PRIMARY KEY(EventTypeID, Køn, FraAlder),
+     FOREIGN KEY(EventTypeID) REFERENCES EventType(EventTypeID) ON DELETE CASCADE
     );
     
 # Indsættelse af data i tabellerne
-INSERT INTO Idrætsforening(ID, Navn, Adresse, PostNr, Email, TelefonNr) VALUES
+INSERT INTO Idrætsforening(ForeningsID, Navn, Adresse, Postnr, Email, TelefonNr) VALUES
 ('oa', 'Over Achievers', 'Lærkevej', '1500', 'OverAchievers@gmail.com', '18131813'),
 ('ua', 'Under Achievers', 'Odinsvej', '1360', 'UnderAchievers@gmail.com', '31813181');
 
-INSERT INTO Person(Email, Fornavn, Efternavn, Adresse, PostNr, Fødselsdato, Køn) VALUES
+INSERT INTO Person(Email, Fornavn, Efternavn, Adresse, Postnr, Fødselsdato, Køn) VALUES
 ('knaldperlen@gmail.com', 'Brian', 'Briansen', 'Briansvej', '1500', '19900202', 'M'),
 ('DanseMyggen@gmail.com', 'Karen', 'Briansen', 'Briansvej', '1500', '19900201', 'K');
 
-INSERT INTO Begivenhed(ID, Dato, EventType) VALUES
+INSERT INTO Begivenhed(ForeningsID, Dato, EventTypeID) VALUES
 ('oa', '20220330', 'MTB'),
 ('ua', '20220202', '10km');
 
-INSERT INTO Deltager(Email, ID, Dato, EventType, StartNr, Resultat) VALUES
+INSERT INTO Deltager(Email, ForeningsID, Dato, EventTypeID, StartNr, Resultat) VALUES
 ('knaldperlen@gmail.com', 'oa', '20220330', 'MTB', '001', '01:52:23'),
 ('DanseMyggen@gmail.com', 'ua', '20220202', '10km', '001', '00:30:28');
 
-INSERT INTO Aldersklasse(Minimumsgrænse, Maksimumsgrænse) VALUES
+INSERT INTO Aldersklasse(EventTypeID, Køn, FraAlder, TilAlder) VALUES
 ('0','9'),
 ('10','19'),
 ('20','29'),
