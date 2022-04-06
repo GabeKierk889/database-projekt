@@ -40,14 +40,15 @@ public class Database {
     public void createPerson(Person person){
         connection= DBConnection.connect();
         try{
-           query="insert into person values(?,?,?,?,?,?)";
+           query="insert into person values(?,?,?,?,?,?,?)";
            statement=connection.prepareStatement(query);
            statement.setString(1,person.getEmail());
            statement.setString(2,person.getFornavn());
            statement.setString(3,person.getEfternavn());
            statement.setString(4,null);
-           statement.setDate(5,  new java.sql.Date(person.getFoedselsdato().getTime()));
-           statement.setString(6,person.getKoen());
+           statement.setInt(5,0);
+           statement.setDate(6,  new java.sql.Date(person.getFoedselsdato().getTime()));
+           statement.setString(7,person.getKoen());
            int rowsInserted = statement.executeUpdate();
            System.out.println("Rows inserted: " + rowsInserted);
         }catch (SQLException e){
@@ -62,7 +63,7 @@ public class Database {
         boolean exist=false;
         connection=DBConnection.connect();
         try{
-            query="select *from begivenhed where ID=? and Dato=? and eventType=?";
+            query="select *from begivenhed where ForeningsID=? and Dato=? and EventTypeID=?";
             statement=connection.prepareStatement(query);
             statement.setString(1,tilmelding.getForeningsId());
             statement.setDate(2, new java.sql.Date(tilmelding.getEventDate().getTime()));
@@ -103,7 +104,7 @@ public class Database {
         boolean exist=false;
         connection=DBConnection.connect();
         try{
-            query="select *from Idrætsforening where Id=?";
+            query="select *from Idrætsforening where ForeningsID=?";
             statement=connection.prepareStatement(query);
             statement.setString(1,Id);
             result=statement.executeQuery();
@@ -123,13 +124,14 @@ public class Database {
     public void createIdraetsforening(String Id){
         connection=DBConnection.connect();
         try{
-            query="insert into Idrætsforening values(?,?,?,?,?)";
+            query="insert into Idrætsforening values(?,?,?,?,?,?)";
             statement=connection.prepareStatement(query);
             statement.setString(1,Id);
             statement.setString(2,"test");
             statement.setString(3,null);
-            statement.setString(4,null);
-            statement.setInt(5,12345);
+            statement.setInt(4,0);
+            statement.setString(5,null);
+            statement.setInt(6,0);
             int rowsInserted=statement.executeUpdate();
             System.out.println("Row inserted: " + rowsInserted);
 
@@ -143,14 +145,16 @@ public class Database {
     public void createDeltager(Person person, Tilmelding begivenhed){
         connection=DBConnection.connect();
         try{
-            query="insert into Deltager (Email,ID,Dato,EventType,StartNr,Resultat) values(?,?,?,?,?,?)";
+            query="insert into Deltager values(?,?,?,?,?,?)";
             statement=connection.prepareStatement(query);
             statement.setString(1,person.getEmail());
             statement.setString(2,begivenhed.getForeningsId());
             statement.setDate(3,new java.sql.Date(begivenhed.getEventDate().getTime()));
             statement.setString(4,begivenhed.getEventTypeId());
-            statement.setDouble(5,0.0);
+            statement.setInt(5,0);
             statement.setTime(6, null);
+            int rowsInserted=statement.executeUpdate();
+            System.out.println("Row inserted: " + rowsInserted);
 
         }catch (SQLException e){
             e.printStackTrace();
