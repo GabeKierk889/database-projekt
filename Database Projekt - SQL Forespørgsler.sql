@@ -1,4 +1,4 @@
-SELECT Fornavn, Efternavn, Køn, timestampdiff(year, Fødselsdato, curdate()) AS Alder, Resultat
+SELECT Eventtypeid as Eventtype, Fornavn, Efternavn, Køn, timestampdiff(year, Fødselsdato, curdate()) AS Alder, Resultat
 FROM Deltager NATURAL JOIN Person NATURAL JOIN aldersklasse a
 WHERE EventtypeID = '10km' AND timestampdiff(year, Fødselsdato, curdate()) >= a.FraAlder 
 AND timestampdiff(year, Fødselsdato, curdate()) <= a.TilAlder AND a.Fraalder = 30 AND køn = 'K'
